@@ -1,5 +1,7 @@
 # Deploy and Host HandBrake with Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/handbrake-111-video-transcoder-in-your-b?referralCode=20H68q)
+
 HandBrake is the open-source video transcoder for converting video from almost any format to MP4 or MKV with modern codecs (H.264, H.265, AV1, VP9). This template runs the full HandBrake 1.11 desktop app in your browser, behind a login page, with a persistent volume, a watch folder and a web file manager for uploads and downloads.
 
 > Community template, not affiliated with the HandBrake project or the image maintainer.
