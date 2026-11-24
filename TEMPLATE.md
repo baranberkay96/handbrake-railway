@@ -39,7 +39,7 @@ Restart `ALWAYS`. One replica (volume).
 
 ## Resource profile
 
-Idle and encoding RAM measured in the deploy test (see report). Estimate: idle ~0.2 GB ($2/month), encoding 0.5-2 GB and all vCPUs. Minimum plan: Trial for 1080p H.264; Hobby for 4K/H.265/AV1. Volume grows with media ($0.15/GB-month).
+Measured 2026-11-24: idle 0.14-0.22 GB (~$2/month), 1080p Very Fast encode ~0.25 GB and all vCPUs; H.265/AV1/4K presets need more (0.5-2 GB). Minimum plan: Trial for 1080p H.264; Hobby for 4K/H.265/AV1. Volume grows with media ($0.15/GB-month).
 
 ## Verification checklist
 

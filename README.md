@@ -52,7 +52,7 @@ On Railway the GUI is protected by the image's built-in login page; the password
 | `/output` | Converted files |
 | `/trash` | Sources moved away by the automatic converter when `AUTOMATED_CONVERSION_KEEP_SOURCE=0` and `AUTOMATED_CONVERSION_USE_TRASH=1` |
 
-All four live on the volume (`/config/storage`, `/config/watch`, ...), so they survive redeploys. The file manager only sees these folders, not HandBrake's settings or the login database.
+The file manager uploads files of up to 4 GB each. All four folders live on the volume (`/config/storage`, `/config/watch`, ...), so they survive redeploys. The file manager only sees these folders, not HandBrake's settings or the login database.
 
 **Security**
 
@@ -62,7 +62,7 @@ All four live on the volume (`/config/storage`, `/config/watch`, ...), so they s
 
 **Resources**
 
-HandBrake idles at roughly 150-250 MB RAM. Encoding uses every vCPU it gets and 0.5-2 GB RAM depending on resolution and codec (4K H.265 or AV1 needs the most). A Trial plan (1 GB) handles 1080p H.264 presets; use Hobby or Pro for 4K and AV1. There is no GPU on Railway, so hardware encoders (NVENC, QSV, VCN) are not available; software encoders are.
+Measured on Railway: HandBrake idles at 140-220 MB RAM; a 1080p "Very Fast" encode stayed near 250 MB. Encoding uses every vCPU it gets and 0.5-2 GB RAM depending on resolution and codec (4K H.265 or AV1 needs the most). A Trial plan (1 GB) handles 1080p H.264 presets; use Hobby or Pro for 4K and AV1. There is no GPU on Railway, so hardware encoders (NVENC, QSV, VCN) are not available; software encoders are.
 
 **Volume size**: videos are large. Hobby volumes start at 5 GB; increase the volume in the service settings before uploading big files.
 
