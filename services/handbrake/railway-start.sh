@@ -47,5 +47,18 @@ for var in DISPLAY_WIDTH DISPLAY_HEIGHT; do
     esac
 done
 
+# --- Media folders on the volume; /storage, /watch, /output and /trash link there. ---
+for dir in storage watch output trash; do
+    mkdir -p "/config/${dir}" 2>/dev/null || log "WARNING: cannot create /config/${dir}"
+    if [ -L "/${dir}" ]; then
+        continue
+    fi
+    if [ -d "/${dir}" ]; then
+        rmdir "/${dir}" 2>/dev/null || { log "WARNING: /${dir} is not empty, leaving it as is"; continue; }
+    fi
+    ln -s "/config/${dir}" "/${dir}" || log "WARNING: cannot link /${dir}"
+done
+rm -rf /config/lost+found 2>/dev/null || true
+
 log "HandBrake GUI on port ${PORT} with login user '${user}'; media folders under /config"
 exec /init "$@"

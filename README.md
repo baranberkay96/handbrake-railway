@@ -39,20 +39,20 @@ On Railway the GUI is protected by the image's built-in login page; the password
 
 1. Open the HandBrake service, Variables tab, and copy `WEB_AUTHENTICATION_USERNAME` (default `admin`) and `WEB_AUTHENTICATION_PASSWORD`.
 2. Open the public domain and log in. HandBrake starts in the browser tab.
-3. Upload a video: open the side panel (arrow on the left edge of the screen), choose the file manager, go to `/config/media` and upload.
-4. In HandBrake, open the source from `/config/media`, pick a preset, set the destination to `/config/output` and start the encode.
-5. Download the result from `/config/output` with the file manager.
+3. Upload a video: open the side panel (arrow on the left edge of the screen), choose the file manager, go to `/storage` and upload.
+4. In HandBrake, open the source from `/storage`, pick a preset, set the destination to `/output` and start the encode.
+5. Download the result from `/output` with the file manager.
 
 **Folders on the volume**
 
 | Folder | Use |
 |---|---|
-| `/config/media` | Your source videos |
-| `/config/watch` | Drop videos here for automatic conversion with `AUTOMATED_CONVERSION_PRESET` |
-| `/config/output` | Converted files |
-| `/config/trash` | Sources removed by the automatic converter when `AUTOMATED_CONVERSION_KEEP_SOURCE=0` and trash is enabled |
+| `/storage` | Your source videos |
+| `/watch` | Drop videos here for automatic conversion with `AUTOMATED_CONVERSION_PRESET` |
+| `/output` | Converted files |
+| `/trash` | Sources moved away by the automatic converter when `AUTOMATED_CONVERSION_KEEP_SOURCE=0` and `AUTOMATED_CONVERSION_USE_TRASH=1` |
 
-The file manager only sees these folders, not HandBrake's settings or the login database.
+All four live on the volume (`/config/storage`, `/config/watch`, ...), so they survive redeploys. The file manager only sees these folders, not HandBrake's settings or the login database.
 
 **Security**
 

@@ -18,7 +18,7 @@ None on the marketplace (empty `_market`). Built from jlesage/handbrake and our 
 
 - jlesage/handbrake v26.09.1 (HandBrake 1.11.2), pinned by digest. Its init (`/init` + cinit) has no PID-1 check, so it works under Railway's podman-init without the s6 workaround the linuxserver images need.
 - Login: the image's own login page (`WEB_AUTHENTICATION=1`, `WEB_AUTHENTICATION_ALLOW_INSECURE=1` because Railway's edge speaks HTTP to the container). Forced on while a public domain exists; invalid password locks with a random one (8.29).
-- One volume (`/config`, Rule 3b): settings plus `media/`, `watch/`, `output/`, `trash/` created by a cont-init script. Watch/output/trash env vars point there. No symlinks (the converter uses `find`, which does not follow a top-level symlink).
+- One volume (`/config`, Rule 3b): settings plus `storage/`, `watch/`, `output/`, `trash/`. Railway ignores the base image's `VOLUME` lines, so `/output` etc. do not exist and upstream `55-handbrake.sh` aborts ("Output folder '/output' doesn't exist", first test). `railway-start` links `/storage`, `/watch`, `/output`, `/trash` to the volume folders before `/init`; the converter uses `find -follow`, so links work.
 - Web file manager restricted to those four folders (uploads/downloads without host mounts).
 - VNC TCP port disabled (`VNC_LISTENING_PORT=-1`); the browser uses the unix socket via nginx websockify.
 - Healthcheck `/site.webmanifest` (served without login once nginx is up; nginx depends on Xvnc and webauth).
@@ -45,7 +45,7 @@ Idle and encoding RAM measured in the deploy test (see report). Estimate: idle ~
 
 1. Deploy SUCCESS, `/site.webmanifest` 200, `/` redirects to `/login` without a session.
 2. Log in with the generated credentials; HandBrake window visible.
-3. Upload a file through the file manager to `/config/watch`; automatic converter writes to `/config/output`.
+3. Upload a file through the file manager to `/watch`; automatic converter writes to `/output`.
 4. Redeploy: settings and files persist.
 5. Password `abc`: deploy succeeds, login locked, log explains.
 

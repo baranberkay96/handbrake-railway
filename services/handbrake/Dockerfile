@@ -16,22 +16,21 @@ FROM ${HANDBRAKE_IMAGE}
 #    the image's "insecure" switch is required; browsers only ever use HTTPS.
 #  - VNC port off: the browser GUI talks to Xvnc through a unix socket.
 #  - Everything lives on the single Railway volume at /config: settings,
-#    presets, queue, and the media/, watch/, output/ and trash/ folders.
+#    presets, queue, and the storage/, watch/, output/ and trash/ folders.
+#    Railway ignores the base image's VOLUME lines (the /storage, /output
+#    folders do not exist there), so railway-start links /storage, /watch,
+#    /output and /trash to those folders before the image's init runs.
 ENV PORT=5800 \
     WEB_LISTENING_PORT=5800 \
     VNC_LISTENING_PORT=-1 \
     WEB_AUTHENTICATION=1 \
     WEB_AUTHENTICATION_ALLOW_INSECURE=1 \
     WEB_FILE_MANAGER=1 \
-    WEB_FILE_MANAGER_ALLOWED_PATHS=/config/media,/config/watch,/config/output,/config/trash \
-    AUTOMATED_CONVERSION_WATCH_DIR=/config/watch \
-    AUTOMATED_CONVERSION_OUTPUT_DIR=/config/output \
-    AUTOMATED_CONVERSION_TRASH_DIR=/config/trash \
+    WEB_FILE_MANAGER_ALLOWED_PATHS=/storage,/watch,/output,/trash,/config/storage,/config/watch,/config/output,/config/trash \
     KEEP_APP_RUNNING=1 \
     DARK_MODE=1
 
 COPY --chmod=0755 railway-start.sh /usr/local/bin/railway-start
-COPY --chmod=0755 55-railway-folders.sh /etc/cont-init.d/55-railway-folders.sh
 
 EXPOSE 5800
 ENTRYPOINT ["/usr/local/bin/railway-start"]
