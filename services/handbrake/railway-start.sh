@@ -54,6 +54,8 @@ for dir in storage watch output trash; do
         continue
     fi
     if [ -d "/${dir}" ]; then
+        # The image marks unmapped folders with .not_mapped (its trash check refuses them).
+        rm -f "/${dir}/.not_mapped" 2>/dev/null
         rmdir "/${dir}" 2>/dev/null || { log "WARNING: /${dir} is not empty, leaving it as is"; continue; }
     fi
     ln -s "/config/${dir}" "/${dir}" || log "WARNING: cannot link /${dir}"
