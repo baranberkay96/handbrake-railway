@@ -1,0 +1,105 @@
+{
+  "name": "HandBrake 1.11 Video Transcoder in Your Browser",
+  "description": "HandBrake GUI in a browser tab with login, watch folder and file manager.",
+  "category": "Other",
+  "tags": [
+    "handbrake",
+    "video",
+    "transcoding",
+    "encoder",
+    "h265",
+    "av1",
+    "media",
+    "novnc"
+  ],
+  "image": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/handbrake.svg",
+  "upstream": {
+    "handbrake": "HandBrake 1.11.2 via jlesage/handbrake:v26.09.1@sha256:6f3a121e235d34e7299080e8cbac5284060e942fb2b137f777e2521fb7af65ae",
+    "checked": "2026-11-24"
+  },
+  "services": {
+    "HandBrake": {
+      "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/handbrake.svg",
+      "source": {
+        "repo": "baranberkay96/handbrake-railway",
+        "rootDirectory": "/services/handbrake"
+      },
+      "startCommand": null,
+      "preDeployCommand": null,
+      "healthcheckPath": "/site.webmanifest",
+      "healthcheckTimeout": 600,
+      "restartPolicyType": "ALWAYS",
+      "numReplicas": 1,
+      "cronSchedule": null,
+      "publicDomain": true,
+      "targetPort": 5800,
+      "tcpProxy": null,
+      "volume": {
+        "mountPath": "/config"
+      },
+      "variables": {
+        "PORT": {
+          "defaultValue": "5800",
+          "description": "Web GUI port (public domain target and healthcheck).",
+          "required": true
+        },
+        "WEB_AUTHENTICATION_USERNAME": {
+          "defaultValue": "admin",
+          "description": "Login user name for the web GUI (letters, digits, . _ @ -).",
+          "required": true
+        },
+        "WEB_AUTHENTICATION_PASSWORD": {
+          "defaultValue": "${{secret(24, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+          "description": "Login password, generated at deploy. 12-256 characters without spaces; anything else locks the login until fixed.",
+          "required": true
+        },
+        "AUTOMATED_CONVERSION": {
+          "defaultValue": "1",
+          "description": "1 = convert every video dropped into /config/watch automatically, 0 = off.",
+          "required": false
+        },
+        "AUTOMATED_CONVERSION_PRESET": {
+          "defaultValue": "General/Very Fast 1080p30",
+          "description": "HandBrake preset for automatic conversion, as Category/Preset Name.",
+          "required": false
+        },
+        "AUTOMATED_CONVERSION_FORMAT": {
+          "defaultValue": "mp4",
+          "description": "Container of automatically converted files (mp4 or mkv).",
+          "required": false
+        },
+        "AUTOMATED_CONVERSION_KEEP_SOURCE": {
+          "defaultValue": "1",
+          "description": "1 = keep the source in /config/watch after conversion, 0 = delete it.",
+          "required": false
+        },
+        "HANDBRAKE_GUI_QUEUE_STARTUP_ACTION": {
+          "defaultValue": "NONE",
+          "description": "What the GUI does with a saved queue at start: PROCESS, CLEAR or NONE.",
+          "required": false
+        },
+        "DISPLAY_WIDTH": {
+          "defaultValue": "1920",
+          "description": "Width of the virtual screen in pixels.",
+          "required": false
+        },
+        "DISPLAY_HEIGHT": {
+          "defaultValue": "1080",
+          "description": "Height of the virtual screen in pixels.",
+          "required": false
+        },
+        "DARK_MODE": {
+          "defaultValue": "1",
+          "description": "1 = dark theme, 0 = light.",
+          "required": false
+        },
+        "TZ": {
+          "defaultValue": "Etc/UTC",
+          "description": "Time zone, e.g. Europe/Berlin.",
+          "required": false
+        }
+      }
+    }
+  },
+  "buckets": []
+}
